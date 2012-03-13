@@ -2,3 +2,7 @@ A few days ago i bought an RF power outlet to control my lights. Because i wante
 In fact, there are projects out there, which allready did this job, but...your skills get rusty if you don't practice ;)
 
 If you want just plain fun with them, try over at "rc switch" at the google repos :) They did a tremendous work with writing a library for the arduino
+
+
+i made a little make file.
+all the major scripts are still present in the bin directory
