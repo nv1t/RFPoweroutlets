@@ -1,5 +1,10 @@
 #!/usr/bin/python2
 
+# changes the standard sox file to a file with:
+# start end duration 
+#
+# for easier signal analyzing
+
 import sys
 
 f = open(sys.argv[1])
@@ -14,5 +19,4 @@ for l in f.read().split("\r\n"):
 			print ' '.join([str(i) for i in [start[0],current[0],duration,start[1]]])
 			start = current 
 
-			if 
 print ' '.join([str(i) for i in [start[0],current[0],current[0]-start[0],start[1]]])
