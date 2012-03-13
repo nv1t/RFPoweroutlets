@@ -18,6 +18,13 @@ OPTIONS:
    -t	   target (shouldn't and can't be used with -a)
    -a      use -i, -c or -p on every directory in "data"
    -v      Verbose cat be clustered like "-vvvv" 
+
+EXAMPLE:
+   $0 -i -a  to create for every directory the normalized files
+   $0 -i -p -t "1-A-0" to create for only "1-A-0" and plot the normalized files
+   $0 -c -a to clean everything up 
+
+You can cluster commands, but keep in mind it's: create, plot and then a clean
 EOF
 }
 
@@ -77,25 +84,6 @@ verbose() {
 	fi
 }
 
-
-if [[ $CLEAN ]]
-then
-	verbose "Cleaning Process started" 1
-	if [[ $ALL ]] 
-	then 
-		verbose "deleting all script generated files" 2
-		buff="data"
-	else
-		verbose "deleting script generated files in ${TARGET}" 2
-		if [[ $TARGET ]]; then buff="data/${TARGET}"; fi;
-	fi
-	verbose "deleting PNG files" 3
-	find ${buff} -name "*.png" -print0 | xargs -0 rm 2> /dev/null;
-	verbose "deleting normalized files" 3
-	find ${buff} -name "*.normalized" -print0 | xargs -0 rm 2> /dev/null;
-	verbose "deleting dat files" 3
-	find ${buff} -name "*.dat" -print0 | xargs -0 rm 2> /dev/null;
-fi
 
 if [[ $CREATE ]]
 then
@@ -162,4 +150,23 @@ then
 		verbose "plotting with gnuplot" 3
 		echo -e ${buff%?} | gnuplot 2> /dev/null
 	fi
+fi
+
+if [[ $CLEAN ]]
+then
+        verbose "Cleaning Process started" 1
+        if [[ $ALL ]]
+        then
+                verbose "deleting all script generated files" 2
+                buff="data"
+        else
+                verbose "deleting script generated files in ${TARGET}" 2
+                if [[ $TARGET ]]; then buff="data/${TARGET}"; fi;
+        fi
+        verbose "deleting PNG files" 3
+        find ${buff} -name "*.png" -print0 | xargs -0 rm 2> /dev/null;
+        verbose "deleting normalized files" 3
+        find ${buff} -name "*.normalized" -print0 | xargs -0 rm 2> /dev/null;
+        verbose "deleting dat files" 3
+        find ${buff} -name "*.dat" -print0 | xargs -0 rm 2> /dev/null;
 fi
